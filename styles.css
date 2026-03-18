@@ -1,0 +1,531 @@
+:root {
+    --primary-color: #3b82f6;
+    --primary-dark: #2563eb;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-tertiary: #f3f4f6;
+    --border-color: #e5e7eb;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: var(--text-primary);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 輸入區樣式 */
+.input-section {
+    padding: 30px;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+}
+
+.input-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.input-group {
+    margin-bottom: 30px;
+}
+
+.input-group h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: var(--text-secondary);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.input-group.optional h3 {
+    border-bottom-color: var(--warning-color);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.form-field input {
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: all 0.2s;
+    background: var(--bg-primary);
+}
+
+.form-field input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-field input.error {
+    border-color: var(--danger-color);
+    background: #fef2f2;
+}
+
+.form-field .hint {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+/* 警告橫幅 */
+.warning-banner {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 2px solid var(--warning-color);
+    border-radius: var(--radius-md);
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.warning-banner.danger {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border-color: var(--danger-color);
+}
+
+.warning-icon {
+    font-size: 1.5rem;
+}
+
+#warningText {
+    font-weight: 600;
+    color: #92400e;
+}
+
+.warning-banner.danger #warningText {
+    color: #991b1b;
+}
+
+/* 輸出區樣式 */
+.output-section {
+    padding: 30px;
+}
+
+.output-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+/* 結果卡片 */
+.result-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 600px) {
+    .result-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+.result-card {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    text-align: center;
+    border: 2px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.result-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.result-card.primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border-color: var(--primary-dark);
+}
+
+.result-card.risk-low {
+    border-color: var(--success-color);
+    background: #f0fdf4;
+}
+
+.result-card.risk-medium {
+    border-color: var(--warning-color);
+    background: #fffbeb;
+}
+
+.result-card.risk-high {
+    border-color: var(--danger-color);
+    background: #fef2f2;
+}
+
+.card-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.result-card.primary .card-label {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.card-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.result-card.primary .card-value {
+    color: white;
+}
+
+.card-unit {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+.result-card.primary .card-unit {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.card-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+/* 貸款結果表格 */
+.loan-result {
+    margin-bottom: 25px;
+}
+
+.loan-result h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.loan-table {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.loan-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.loan-row:last-child {
+    border-bottom: none;
+}
+
+.loan-row.header {
+    background: var(--bg-tertiary);
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.loan-row.highlight {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    font-weight: 600;
+}
+
+/* 策略比較 */
+.strategy-comparison {
+    margin-bottom: 25px;
+}
+
+.strategy-comparison h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.chart-container {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-bottom: 15px;
+    height: 300px;
+    position: relative;
+}
+
+.strategy-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+/* 情境分析 */
+.scenario-results {
+    margin-bottom: 25px;
+}
+
+.scenario-results h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.scenario-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+@media (max-width: 768px) {
+    .scenario-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+.scenario-card {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    text-align: center;
+    border: 2px solid var(--border-color);
+}
+
+.scenario-card.recommended {
+    border-color: var(--success-color);
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.scenario-card h4 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.scenario-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.scenario-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* 建議區塊 */
+.recommendations {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.recommendations h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.recommendation-list {
+    list-style: none;
+}
+
+.recommendation-list li {
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border-color);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.recommendation-list li:last-child {
+    border-bottom: none;
+}
+
+.recommendation-list li::before {
+    content: "✓";
+    color: var(--success-color);
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* 風險警告 */
+.risk-warnings {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border: 2px solid var(--danger-color);
+    border-radius: var(--radius-md);
+    padding: 20px;
+}
+
+.risk-warnings h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #991b1b;
+}
+
+.risk-warnings ul {
+    list-style: none;
+}
+
+.risk-warnings li {
+    padding: 8px 0;
+    color: #7f1d1d;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.risk-warnings li::before {
+    content: "⚠️";
+    flex-shrink: 0;
+}
+
+/* Footer */
+footer {
+    background: var(--bg-tertiary);
+    padding: 20px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* 動畫效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-card, .scenario-card, .loan-row {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    header {
+        padding: 25px 20px;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .input-section, .output-section {
+        padding: 20px;
+    }
+    
+    .scenario-cards {
+        grid-template-columns: 1fr;
+    }
+}

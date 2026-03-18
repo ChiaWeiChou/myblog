@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安全槓桿計算器 - 智慧財務規劃</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ 安全槓桿計算器</h1>
+            <p class="subtitle">根據 Will 的安全槓桿理論，計算您的個人化財務策略</p>
+        </header>
+
+        <div class="main-content">
+            <!-- 輸入區 -->
+            <section class="input-section">
+                <h2>📊 財務資料輸入</h2>
+                
+                <div class="input-group">
+                    <h3>必填欄位</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="monthlyIncome">月收入（元）</label>
+                            <input type="number" id="monthlyIncome" placeholder="例如：100000" min="0">
+                            <span class="hint">您的稅後月收入</span>
+                        </div>
+                        <div class="form-field">
+                            <label for="monthlyExpense">月開銷（元）</label>
+                            <input type="number" id="monthlyExpense" placeholder="例如：65000" min="0">
+                            <span class="hint">每月固定與變動支出</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="currentAssets">現有資產（元）</label>
+                            <input type="number" id="currentAssets" placeholder="例如：500000" min="0">
+                            <span class="hint">目前可投資的總資產</span>
+                        </div>
+                        <div class="form-field">
+                            <label for="emergencyFund">緊急備用金（元）</label>
+                            <input type="number" id="emergencyFund" placeholder="例如：780000" min="0">
+                            <span class="hint">建議至少 12 個月開銷</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="loanRate">信貸利率（%）</label>
+                            <input type="number" id="loanRate" placeholder="例如：3" min="0" max="20" step="0.1">
+                            <span class="hint">年利率，建議低於 3%</span>
+                        </div>
+                        <div class="form-field">
+                            <label for="investmentReturn">預期投資報酬率（%）</label>
+                            <input type="number" id="investmentReturn" placeholder="例如：8" min="0" max="30" step="0.1">
+                            <span class="hint">0050 歷史平均約 8%</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="loanTerm">貸款期限（年）</label>
+                            <input type="number" id="loanTerm" placeholder="例如：7" min="1" max="30">
+                            <span class="hint">建議 5-7 年</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group optional">
+                    <h3>選填欄位（進階設定）</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="safetyRatio">安全月付比例（%）</label>
+                            <input type="number" id="safetyRatio" placeholder="50" min="10" max="80" value="50">
+                            <span class="hint">預設 50%，建議不超過 50%</span>
+                        </div>
+                        <div class="form-field">
+                            <label for="simulationYears">模擬年數（年）</label>
+                            <input type="number" id="simulationYears" placeholder="20" min="5" max="50" value="20">
+                            <span class="hint">預設 20 年長期規劃</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="marginRatio">質押成數（%）</label>
+                            <input type="number" id="marginRatio" placeholder="60" min="0" max="80" value="60">
+                            <span class="hint">股票質押可借比例</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-banner" id="warningBanner" style="display: none;">
+                    <span class="warning-icon">⚠️</span>
+                    <span id="warningText"></span>
+                </div>
+            </section>
+
+            <!-- 輸出區 -->
+            <section class="output-section">
+                <h2>📈 計算結果</h2>
+                
+                <div class="result-cards">
+                    <div class="result-card primary">
+                        <div class="card-label">建議槓桿倍數</div>
+                        <div class="card-value" id="leverageRatio">-</div>
+                        <div class="card-unit">倍</div>
+                    </div>
+                    
+                    <div class="result-card" id="riskCard">
+                        <div class="card-label">風險評級</div>
+                        <div class="card-value" id="riskLevel">-</div>
+                        <div class="card-desc" id="riskDesc"></div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="card-label">安全月付額上限</div>
+                        <div class="card-value" id="maxMonthlyPayment">-</div>
+                        <div class="card-unit">元/月</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="card-label">現金流覆蓋率</div>
+                        <div class="card-value" id="cashflowCoverage">-</div>
+                        <div class="card-unit">%</div>
+                    </div>
+                </div>
+
+                <div class="loan-result">
+                    <h3>💰 可貸款金額試算</h3>
+                    <div class="loan-table">
+                        <div class="loan-row header">
+                            <span>月付額</span>
+                            <span>可貸款總額</span>
+                            <span>總利息成本</span>
+                        </div>
+                        <div class="loan-row" id="loanRow1">
+                            <span id="payment1">-</span>
+                            <span id="amount1">-</span>
+                            <span id="interest1">-</span>
+                        </div>
+                        <div class="loan-row highlight" id="loanRow2">
+                            <span id="payment2">-</span>
+                            <span id="amount2">-</span>
+                            <span id="interest2">-</span>
+                        </div>
+                        <div class="loan-row" id="loanRow3">
+                            <span id="payment3">-</span>
+                            <span id="amount3">-</span>
+                            <span id="interest3">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="strategy-comparison">
+                    <h3>📊 三種策略比較（長期資產成長）</h3>
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                    <div class="strategy-legend">
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #94a3b8;"></span>
+                            <span>無槓桿（僅現金投入）</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #3b82f6;"></span>
+                            <span>保守槓桿（月付額 = 盈餘 30%）</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #10b981;"></span>
+                            <span>穩健槓桿（月付額 = 盈餘 50%）</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-results">
+                    <h3>🎯 情境分析</h3>
+                    <div class="scenario-cards">
+                        <div class="scenario-card">
+                            <h4>情境 A：無槓桿</h4>
+                            <div class="scenario-value" id="scenarioA">-</div>
+                            <p>僅用現金投資，無貸款風險</p>
+                        </div>
+                        <div class="scenario-card recommended">
+                            <h4>情境 B：安全槓桿 ⭐</h4>
+                            <div class="scenario-value" id="scenarioB">-</div>
+                            <p>建議策略，平衡風險與報酬</p>
+                        </div>
+                        <div class="scenario-card">
+                            <h4>情境 C：永續槓桿</h4>
+                            <div class="scenario-value" id="scenarioC">-</div>
+                            <p>資產達標後開啟質押循環</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recommendations" id="recommendations">
+                    <h3>💡 個人化建議</h3>
+                    <div class="recommendation-list" id="recommendationList">
+                        <!-- 動態生成 -->
+                    </div>
+                </div>
+
+                <div class="risk-warnings" id="riskWarnings" style="display: none;">
+                    <h3>🚨 風險警示</h3>
+                    <ul id="riskWarningList">
+                        <!-- 動態生成 -->
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>© 2026 安全槓桿計算器 | 基於 Will 的安全槓桿理論 | 僅供參考，投資有風險</p>
+        </footer>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html>
